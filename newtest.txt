@@ -1,0 +1,12 @@
+sudo mkdir -p /media/sequencingdata
+if [ ! -d "/etc/smbcredentials" ]; then
+sudo mkdir /etc/smbcredentials
+fi
+if [ ! -f "/etc/smbcredentials/glblabfilerepo.cred" ]; then
+    sudo bash -c 'echo "username=glblabfilerepo" >> /etc/smbcredentials/glblabfilerepo.cred'
+    sudo bash -c 'echo "password=7Pi4e70+tQdrbkHD8YxVw32Cw9BbK6foTqgv8K/yRRtIkK6LzbgQ+LNkMxRvQi1ksqDJka+AStiXeQYQ==" >> /etc/smbcredentials/glblabfilerepo.cred'
+fi
+sudo chmod 600 /etc/smbcredentials/glblabfilerepo.cred
+ 
+sudo bash -c 'echo "//glblabfilerepo.file.core.windows.net/sequencingdata /media/sequencingdata cifs nofail,credentials=/etc/smbcredentials/glblabfilerepo.cred,dir_mode=0755,file_mode=0755,serverino,nosharesock,mfsymlinks,actimeo=30" >> /etc/fstab'
+sudo mount -t cifs //glblabfilerepo.file.core.windows.net/sequencingdata /media/sequencingdata -o credentials=/etc/smbcredentials/glblabfilerepo.cred,dir_mode=0755,file_mode=0755,serverino,nosharesock,mfsymlinks,actimeo=30
